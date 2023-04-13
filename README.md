@@ -14,7 +14,7 @@ The script does not currently come with error handling. Moreover, there is curre
 
 
 ## Installing
-* Copy project files into a new directory (using, for example, ```git clone <http[s]://host.xz[:port]/path/to/repo.git/>```).
+* Copy project files into a new directory (using, for example, ```git clone https://github.com/Firgrep/python-you-upload.git```).
 * It is _recommended_ to set up a virtual environment for the script and its dependencies. You can do this by making a new directory and then, when within that directory, run ```py -3 -m venv .venv``` and then open your code editor within that directory (or, if you're already in a code editor, open a new terminal to start using the virtual environment). 
     - If for some reason the virtual environment does not activate, manual activation is possible but it may differ depending on your machine and code editor:
         - On Unix or MacOS, using the bash shell: source /path/to/venv/bin/activate
