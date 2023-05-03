@@ -14,9 +14,9 @@ RELATIVE_PATH = "../../payload"
 FULL_PATH = os.path.join(ABSOLUTE_PATH, RELATIVE_PATH)
 
 # Instance-related data - information unique to this video upload.
-S_TITLE = "Test no 3 - March 27"
-S_PUBLISH_DATE = "2023-04-10T19:20+01:00"
-S_UNIQUE_DESC_START = "This is the third test video for March 27."
+S_TITLE = "Hegel on the Sciences, Arts and Religion in Ancient China"
+S_PUBLISH_DATE = "2023-03-29T19:20+01:00"
+S_UNIQUE_DESC_START = "Ahilleas and Filip discuss the fourth and final part concerning the history of China as a moment of Hegel's account of world history. Pertinent here are the sciences, arts and the religion."
 S_UNIQUE_DESC_END = ""
 
 # Generic-related data - information shared between videos of which this is an instance.
@@ -45,7 +45,7 @@ FILIP NIKLAS completed his PhD in philosophy in 2022, under the supervision of P
 
 📗 For his course on Hegel’s PHENOMENOLOGY OF SPIRIT, please go to: https://halkyonacademy.teachable.com/p/hegel-s-phenomenology-of-spirit
 📚 For his course on Hegel’s SYSTEM more broadly, please go to:
-https://halkyonacademy.teachable.com/p/hegel-masterclass
+https://halkyonacademy.teachable.com/p/hegel-masterclass1
 📘 For his course on WHAT IS PHILOSOPHY – an introduction to philosophy through R. G. Collingwood and others – please go to: 
 https://halkyonacademy.teachable.com/p/what-is-philosophy
 
@@ -96,7 +96,7 @@ def main():
             print("Fetching New Tokens...")
             flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
                     client_secrets_file, scopes)
-            credentials = flow.run_console()
+            credentials = flow.run_local_server(port=0)
             with open("token.pickle", "wb") as f:
                 print("Saving Credentials for Future Use...")
                 pickle.dump(credentials, f)
@@ -106,6 +106,7 @@ def main():
         api_service_name, api_version, credentials=credentials)
 
     # Video upload.
+    media = MediaFileUpload(os.path.join(FULL_PATH, F_UPLOAD_MEDIA), resumable=True)
     request = youtube.videos().insert(
         part="snippet,status",
         body={
@@ -121,9 +122,13 @@ def main():
             "selfDeclaredMadeForKids": B_FOR_KIDS
           }
         },
-        media_body=MediaFileUpload(os.path.join(FULL_PATH, F_UPLOAD_MEDIA))
+        media_body=media
     )
-    response = request.execute()
+    response = None
+    while response is None:
+      status, response = request.next_chunk()
+      if status:
+        print(f"Uploaded {int(status.progress() * 100)}%.")
 
     videoId = response["id"]
     print("Video Upload Complete.")
