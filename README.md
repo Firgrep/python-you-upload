@@ -14,6 +14,7 @@ The script does not currently come with error handling. Moreover, there is curre
 
 
 ## Installing
+* Copy project files into a new directory (using, for example, ```git clone https://github.com/Firgrep/python-you-upload.git```).
 * It is _recommended_ to set up a virtual environment for the script and its dependencies. You can do this by making a new directory and then, when within that directory, run ```py -3 -m venv .venv``` and then open your code editor within that directory (or, if you're already in a code editor, open a new terminal to start using the virtual environment). 
     - If for some reason the virtual environment does not activate, manual activation is possible but it may differ depending on your machine and code editor:
         - On Unix or MacOS, using the bash shell: source /path/to/venv/bin/activate
@@ -22,7 +23,6 @@ The script does not currently come with error handling. Moreover, there is curre
         - On Windows using the Command Prompt: path\to\venv\Scripts\activate.bat
         - On Windows using PowerShell: path\to\venv\Scripts\Activate.ps1
 
-* Copy project files into a new directory (using, for example, ```git clone <http[s]://host.xz[:port]/path/to/repo.git/>```).
 * Run this command to install dependencies ```pip install -r requirements.txt```.
     - NOTE: A bug was encountered using the latest packages from the Google Python API client (2023/03/27), specifically to do with the flow object, therefore these exact depency versions were chosen since they function together right out the box. Future releases of the API client will likely patch this (if they haven't already). (For more information about this, see https://github.com/xyou365/AutoRclone/issues/101)
 
